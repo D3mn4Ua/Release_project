@@ -1,9 +1,11 @@
 from django import forms 
+from .models import Profile
 
-
-class UploadAvatarForm(forms.Form ):
-    avatar = forms.ImageField(
-    label = 'Download an avatar',
-    required = False,
-    widget = forms.ClearableFileInput(attrs ={'class':'form-control'})
-    )
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'avatar']
+        widgets = {
+            'bio': forms.TextInput(attrs={'class': 'form-control'}),
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'})
+        }

@@ -5,7 +5,7 @@ from .forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 
-def registration_view(request):
+def registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -17,7 +17,7 @@ def registration_view(request):
 
     return render(request, 'auth_system/registration.html', {'form': form})
 
-def login_view(request):
+def log_in(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -30,9 +30,9 @@ def login_view(request):
     return render(request, 'auth_system/login.html', {'form': form})
 
 @login_required
-def logout_view(request):
+def log_out(request):
         logout(request)
         return redirect('home')
 
-def home_view(request):
+def home(request):
     return render (request ,'home.html')
