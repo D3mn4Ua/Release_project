@@ -9,6 +9,7 @@
     {{ announcement.content }}
   </p>
   <p>
-    <a href="{% url 'announcement-delete' announcement.pk %}">Delete</a>
+    <a href="{% url 'delete-announcement' announcement.pk %}">Delete</a>
+    <a href="{% url 'edit-announcement' announcement.pk %}">Edit</a>
   </p>
 </div>

@@ -15,15 +15,27 @@ def create_announcement(request):
     else:
         form = AnnouncementCreationForm()
 
-    return render(request, 'blog/announcement_create.html', {'form': form})
+    return render(request, 'blog/create_announcement.html', {'form': form})
 
 @login_required
-def announcement_delete(request, pk):
+def edit_announcement(request, pk):
+    announcement = get_object_or_404(BlogAnnouncement, pk=pk)
+    if request.method == 'POST':
+        form = AnnouncementCreationForm(request.POST, request.FILES, instance=announcement)
+        if form.is_valid():
+            form.save()
+            return redirect('announcement-detail', pk=pk)
+    else:
+        form = AnnouncementCreationForm(instance=announcement)
+    return render(request, 'blog/edit_announcement.html', {'form': form})
+
+@login_required
+def delete_announcement(request, pk):
     announcement = get_object_or_404(BlogAnnouncement, pk=pk)
     if request.method == 'POST':
         announcement.delete()
         return redirect('announcement-list')
-    return render(request, 'blog/announcement_delete.html', {'announcement': announcement})
+    return render(request, 'blog/delete_announcement.html', {'announcement': announcement})
 
 def announcement_list(request):
     announcements = BlogAnnouncement.objects.all()
