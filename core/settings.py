@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'auth_system',
     'profiler',
     'products',
+    'blog'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,9 @@
+{% for a in announcements %}
+  <h2>{{ a.title }}</h2>
+  <p>{{ a.content }}</p>
+  <p>
+    <a href="{% url 'announcement-detail' a.pk  %}"> More details </a>
+  </p>
+{% empty %}
+  <p>No announcements.</p>
+{% endfor %}

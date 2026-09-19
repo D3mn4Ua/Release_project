@@ -1,0 +1,14 @@
+{% if announcement.title_image %}
+  <img src="{{ announcement.title_image.url }}" alt="">
+{% endif %}
+<div>
+  <h1>
+    {{ announcement.title }}
+  </h1>
+  <p>
+    {{ announcement.content }}
+  </p>
+  <p>
+    <a href="{% url 'announcement-delete' announcement.pk %}">Delete</a>
+  </p>
+</div>
