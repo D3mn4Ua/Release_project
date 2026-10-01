@@ -1,9 +1,16 @@
 Hello, {{ request.user.username }}!
+  <div>
+    <ol> <a href="{% url 'create-product' %}">Create product</a> </ol>
+    <ol> <a href="{% url 'announcement-list' %}">Announcement list</a> </ol>
+    <ol> <a href="{% url 'create-announcement' %}">Create announcement</a> </ol>
+  </div>
 {% if user.is_authenticated %}
   <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
     <button type="submit">Logout</button>
   </form>
 {% else %}
-  <a href="{% url 'login' %}">Login</a>
+  <div>
+    <ol> <a href="{% url 'login' %}">Login</a> </ol>
+  </div>
 {% endif %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AnnouncementCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import BlogAnnouncement
+from profiler.mixins import user_can_edit
 
 @login_required
 def create_announcement(request):
@@ -11,13 +12,13 @@ def create_announcement(request):
             announcement = form.save(commit=False)
             announcement.creator = request.user.profile
             announcement.save()
-            return redirect('announcement-list')
+            return redirect('announcement-detail')
     else:
         form = AnnouncementCreationForm()
 
     return render(request, 'blog/create_announcement.html', {'form': form})
 
-@login_required
+@user_can_edit
 def edit_announcement(request, pk):
     announcement = get_object_or_404(BlogAnnouncement, pk=pk)
     if request.method == 'POST':
@@ -29,7 +30,7 @@ def edit_announcement(request, pk):
         form = AnnouncementCreationForm(instance=announcement)
     return render(request, 'blog/edit_announcement.html', {'form': form})
 
-@login_required
+@user_can_edit
 def delete_announcement(request, pk):
     announcement = get_object_or_404(BlogAnnouncement, pk=pk)
     if request.method == 'POST':

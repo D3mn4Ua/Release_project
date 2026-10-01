@@ -1,0 +1,11 @@
+<!-- {% if product.product_image %}
+  <img src="{{ product.product_image.url }}" alt="">
+{% endif %} -->
+<div>
+  <h1>
+    {{ product.title }}
+  <p>
+    <a href="{% url 'delete-product' product.pk %}">Delete</a>
+    <a href="{% url 'edit-product' product.pk %}">Edit</a>
+  </p>
+</div>

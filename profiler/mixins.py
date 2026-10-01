@@ -7,6 +7,6 @@ def user_can_edit(func):
     def wrapper(request, pk, *args, **kwargs):
         profile = get_object_or_404(Profile, pk=pk)
         if request.user.id != profile.user.id and profile.role == 'user':
-            return HttpResponse('You cant edit this profile.')
+            return HttpResponse('You cant interact with this object.')
         return func(request, pk, *args, **kwargs)
     return wrapper
