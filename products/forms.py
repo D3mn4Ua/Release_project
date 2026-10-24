@@ -1,19 +1,23 @@
 from django import forms
-from .models import Product_test
+from .models import Product, Image
 
 
 class ProductCreationForm(forms.ModelForm):
     class Meta:
-        model = Product_test
-        fields = ['title']
+        model = Product
+        fields = ['title', 'price', 'quality', 'quantity', 'product_image', 'category', 'manufacturer']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'})
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'min': 1}),
+            'quality': forms.Select(attrs={}),
+            'quantity': forms.NumberInput(attrs={'min': 0})
         }
 
-# class ImageCreationForm(forms.ModelForm):
-#     class Meta:
-#         model = Image
-#         fields = ['image', 'title_image']
-#         widgets = {
-#             'image': forms.ClearableImageField()
-#         }
+class ImageCreationForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image', 'description']
+        widgets = {
+            'image': forms.ClearableFileInput(),
+            'description': forms.TextInput(attrs={'rows': 6})
+        }

@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 Hello, {{ request.user.username }}!
   <div>
     <ol> <a href="{% url 'create-product' %}">Create product</a> </ol>
@@ -14,3 +16,4 @@ Hello, {{ request.user.username }}!
     <ol> <a href="{% url 'login' %}">Login</a> </ol>
   </div>
 {% endif %}
+{% endblock %}

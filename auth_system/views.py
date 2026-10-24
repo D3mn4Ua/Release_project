@@ -35,4 +35,7 @@ def log_out(request):
         return redirect('home')
 
 def home(request):
-    return render (request ,'home.html')
+    return render(request, 'home.html')
+
+def error_401(request):
+    return render(request, '401.html')

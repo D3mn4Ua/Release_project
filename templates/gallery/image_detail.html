@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <select name="product_id" class="form-select">
+    {% for product in products %}
+      <option value="{{ product.id }}">{{ product.name }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-primary">Add to product</button>
+</form>
+{% endblock %}

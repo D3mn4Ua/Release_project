@@ -15,7 +15,7 @@ class Category(models.Model):
         blank=True,
         related_name='children'
     )
-    attributes = models.JSONField(blank=True, null=True)
+    attributes = models.JSONField(blank=True, null=True, default=dict)
 
 
 class Manufacturer(models.Model):
@@ -39,6 +39,8 @@ class Product(models.Model):
 
 
     title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    additional_info = models.JSONField(default=dict, blank=True)
     price = models.IntegerField(validators=[MinValueValidator(1)])
     quantity = models.IntegerField(validators=[MinValueValidator(0)])
     quality = models.CharField(max_length=15, choices=QUALITY_CHOICES, default='NONE')

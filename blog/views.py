@@ -12,7 +12,7 @@ def create_announcement(request):
             announcement = form.save(commit=False)
             announcement.creator = request.user.profile
             announcement.save()
-            return redirect('announcement-detail')
+            return redirect('announcement-detail', pk=announcement.id)
     else:
         form = AnnouncementCreationForm()
 
