@@ -18,7 +18,7 @@ def create_announcement(request):
 
     return render(request, 'blog/create_announcement.html', {'form': form})
 
-@user_can_edit
+@user_can_edit(BlogAnnouncement)
 def edit_announcement(request, pk):
     announcement = get_object_or_404(BlogAnnouncement, pk=pk)
     if request.method == 'POST':
@@ -30,7 +30,7 @@ def edit_announcement(request, pk):
         form = AnnouncementCreationForm(instance=announcement)
     return render(request, 'blog/edit_announcement.html', {'form': form})
 
-@user_can_edit
+@user_can_edit(BlogAnnouncement)
 def delete_announcement(request, pk):
     announcement = get_object_or_404(BlogAnnouncement, pk=pk)
     if request.method == 'POST':

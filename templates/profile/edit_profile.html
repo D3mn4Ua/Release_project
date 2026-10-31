@@ -1,5 +1,28 @@
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5" style="max-width: 650px;">
+    <div class="card shadow-sm border-0 rounded-4 p-4 p-md-5">
+        <h2 class="fw-bold mb-4 text-center">Edit your account</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger rounded-3 py-2 mb-3 small">
+                    Please correct the errors below.
+                </div>
+            {% endif %}
+
+            <div class="product-form-fields mb-4">
+                {{ form.as_p }}
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg rounded-pill fw-semibold py-3 shadow-sm">
+                    Publish Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

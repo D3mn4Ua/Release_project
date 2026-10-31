@@ -1,19 +1,60 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-Hello, {{ request.user.username }}!
-  <div>
-    <ol> <a href="{% url 'create-product' %}">Create product</a> </ol>
-    <ol> <a href="{% url 'announcement-list' %}">Announcement list</a> </ol>
-    <ol> <a href="{% url 'create-announcement' %}">Create announcement</a> </ol>
+
+<div class="text-center my-4">
+  <img src="{% static 'assets/home_logo.png' %}" 
+       id="logo" 
+       data-light-logo="{% static 'assets/home_logo.png' %}" 
+       data-dark-logo="{% static 'assets/logo.png' %}" 
+       class="img-fluid" 
+       style="max-height:120px;">
+</div>
+
+<div class="bg-success mb-4" style="height:4px;"></div>
+
+<section class="text-center py-3">
+  <h1 class="fw-bold fade-in">Who are we?</h1>
+</section>
+
+<div class="container my-4">
+  <div class="row g-4 align-items-stretch">
+    
+    <div class="col-md-6 d-flex flex-column justify-content-between gap-4">
+      
+      <div class="bg-body p-4 border rounded shadow-sm hover-card fade-in flex-fill d-flex flex-column justify-content-center">
+        <h2>We are NTS!</h2>
+        <p class="mb-0">Welcome to Nerdy Tech Store (NTS) - your global destination for affordable technology. We ship internationally and provide a wide range of hardware, ranging from simple everyday essentials like toasters to powerful servers. Whatever your tech needs, NTS delivers quality at the right price.</p>
+      </div>
+
+      <div class="bg-body p-4 border rounded shadow-sm hover-card fade-in flex-fill d-flex flex-column justify-content-center" style="animation-delay:0.2s">
+        <h3>Why choose us</h3>
+        <p class="mb-0">We combine reliability, fast international shipping, and great prices to ensure you always get the best tech experience.</p>
+      </div>
+
+    </div>
+
+    <div class="bg-body col-md-6 d-flex">
+      <div class="bg-body ribbon-panel shadow-sm hover-card fade-in w-100 d-flex flex-column justify-content-between p-4" style="animation-delay:0.3s">
+        
+        <div class="bg-body ribbon-section ribbon-shop mb-3">
+          <h3>Check our shop</h3>
+          <p>Introduce yourself to a variety of hardware with NTS at any given moment. Click this link and go straight to shopping.</p>
+          <a href="{% url 'product-list' %}" class="btn btn-success btn-lg mt-2">Shop now</a>
+        </div>
+
+        <hr class="text-muted my-2">
+
+        <div class="bg-body ribbon-section ribbon-blog mt-3">
+          <h3>Visit our blog</h3>
+          <p>Stay tuned for the latest tech news, expert reviews, hardware guides, and useful tips from the NTS team.</p>
+          <a href="{% url 'announcement-list' %}" class="btn btn-primary btn-lg mt-2">Read blog</a>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-{% if user.is_authenticated %}
-  <form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-  </form>
-{% else %}
-  <div>
-    <ol> <a href="{% url 'login' %}">Login</a> </ol>
-  </div>
-{% endif %}
+</div>
+
 {% endblock %}

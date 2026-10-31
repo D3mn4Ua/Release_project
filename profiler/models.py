@@ -23,7 +23,7 @@ class Profile(models.Model):
     ]
 
     role = models.CharField(max_length=9, choices=ROLE_CHOICES, default=USER)
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True, null=True)
     avatar =models .ImageField (upload_to ='avatars/', default ='avatars/default.png')
 

@@ -39,3 +39,6 @@ def home(request):
 
 def error_401(request):
     return render(request, '401.html')
+
+def success(request):
+    return render(request, 'success.html')

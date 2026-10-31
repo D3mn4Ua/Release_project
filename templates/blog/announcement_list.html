@@ -1,9 +1,40 @@
-{% for a in announcements %}
-  <h2>{{ a.title }}</h2>
-  <p>{{ a.content }}</p>
-  <p>
-    <a href="{% url 'announcement-detail' a.pk  %}"> More details </a>
-  </p>
-{% empty %}
-  <p>No announcements.</p>
-{% endfor %}
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4" style="max-width: 800px;">
+    <h2 class="fw-bold mb-4">Announcements</h2>
+    
+    <div class="d-flex flex-column gap-4">
+        {% for a in announcements %}
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                {% if a.title_image %}
+                    <img src="{{ a.title_image.url }}" class="card-img-top object-fit-cover" alt="{{ a.title }}" style="height: 280px;">
+                {% endif %}
+                
+                <div class="card-body p-4">
+                    <h3 class="card-title fw-bold text-success mb-2">{{ a.title }}</h3>
+                    <p class="card-text text-secondary mb-3">{{ a.content }}</p>
+                    
+                    <div class="d-flex justify-content-end">
+                        <a href="{% url 'announcement-detail' a.pk %}" class="btn btn-outline-success btn-sm rounded-pill px-4 fw-semibold">
+                            More details <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="text-center py-5">
+                <div class="text-muted mb-2">
+                    <i class="bi bi-bell-slash fs-1"></i>
+                </div>
+                <p class="text-muted fs-5">No announcements available.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+        <div class="mt-4">
+            {% include 'pagination/pagination.html' %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

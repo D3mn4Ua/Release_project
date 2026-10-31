@@ -5,7 +5,7 @@ from .models import Profile
 from .mixins import user_can_edit
 
 @login_required
-@user_can_edit
+@user_can_edit(Profile)
 def edit_profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     profile.auto_give_role()

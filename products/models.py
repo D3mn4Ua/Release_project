@@ -2,10 +2,6 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 
-class Product_test(models.Model):
-    title = models.CharField(max_length=63)
-
-
 class Category(models.Model):
     name = models.CharField(max_length=255)
     parent = models.ForeignKey(
@@ -17,14 +13,22 @@ class Category(models.Model):
     )
     attributes = models.JSONField(blank=True, null=True, default=dict)
 
+    def __str__(self):
+        return f'Category: {self.name}'
+
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=127, unique=True)
+
+    def __str__(self):
+        return f'Manufacturer: {self.name}'
 
 
 class Image(models.Model):
     image = models.ImageField(upload_to='product/', null=True, blank=True)
     description = models.TextField(blank=True, null=True)
+
+    
 
 
 class Product(models.Model):
@@ -48,3 +52,6 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, related_name='products')
     seller = models.ForeignKey("profiler.Profile", on_delete=models.CASCADE, related_name='products')
+
+    def __str__(self):
+        return f'Product: {self.title}; seller: {self.seller.user.username}'

@@ -1,15 +1,38 @@
-{% if announcement.title_image %}
-  <img src="{{ announcement.title_image.url }}" alt="">
-{% endif %}
-<div>
-  <h1>
-    {{ announcement.title }}
-  </h1>
-  <p>
-    {{ announcement.content }}
-  </p>
-  <p>
-    <a href="{% url 'delete-announcement' announcement.pk %}">Delete</a>
-    <a href="{% url 'edit-announcement' announcement.pk %}">Edit</a>
-  </p>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5" style="max-width: 800px;">
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+
+        {% if announcement.title_image %}
+            <div class="w-100 bg-light" style="max-height: 450px; overflow: hidden;">
+                <img src="{{ announcement.title_image.url }}" class="w-100 h-100 object-fit-cover" alt="{{ announcement.title }}">
+            </div>
+        {% endif %}
+
+        <div class="card-body p-4 p-md-5">
+            <h1 class="fw-bold mb-4 text-dark">{{ announcement.title }}</h1>
+
+            <div class="text-secondary fs-6 lh-lg mb-5">
+                {{ announcement.content|linebreaks }}
+            </div>
+            <div class="text-secondary fs-7 lh-lg mb-5">
+              Redactor/creator: 
+              <a href="{% url 'profile-detail' announcement.creator.id %}">{{ announcement.creator.user.username }}</a>
+            </div>
+
+            {% if request.user.profile == announcement.creator %}
+              <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                  <a href="{% url 'edit-announcement' announcement.pk %}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">
+                      <i class="bi bi-pencil-square me-1"></i> Edit
+                  </a>
+                  
+                  <a href="{% url 'delete-announcement' announcement.pk %}" class="btn btn-outline-danger rounded-pill px-4 fw-semibold">
+                      <i class="bi bi-trash me-1"></i> Delete
+                  </a>
+              </div>
+            {% endif %}
+
+        </div>
+    </div>
 </div>
+{% endblock %}

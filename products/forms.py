@@ -1,13 +1,15 @@
 from django import forms
-from .models import Product, Image
+from .models import Product,  Image
 
 
 class ProductCreationForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['title', 'price', 'quality', 'quantity', 'product_image', 'category', 'manufacturer']
+        fields = ['title', 'price', 'additional_info' , 'quality','quantity', 'product_image', 'category', 'manufacturer']
+
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'additional_info': forms.TextInput(),
             'price': forms.NumberInput(attrs={'min': 1}),
             'quality': forms.Select(attrs={}),
             'quantity': forms.NumberInput(attrs={'min': 0})

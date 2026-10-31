@@ -1,53 +1,59 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<form method="get" action="{% url 'product-list' %}">
-    <fieldset>
-        <legend>Categories:</legend>
-        <select id="category-select" name="category">
-            <option value="">-- Choose a category --</option>
-            {% for cat in categories %}
-                <option value="{{ cat.id }}"
-                    {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
-                    {{ cat.name }}
-                </option>
-            {% endfor %}
-        </select>
-    </fieldset>
-
-    <div id="filters-block">
-
+<div class="container py-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <h2 class="fw-bold m-0">Product Catalog</h2>
+        
+        <div class="d-flex align-items-center gap-2 flex-grow-1 flex-md-grow-0" style="max-width: 500px;">
+            <div class="input-group">
+                <input type="text" id="search-input" name="q" class="form-control border-end-0" placeholder="Search products..." value="{{ request.GET.q }}">
+                <button class="btn btn-outline-secondary border-start-0" type="button" id="search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+            
+            <button class="btn btn-success d-flex align-items-center gap-2 text-nowrap" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterDrawer">
+                <i class="bi bi-funnel"></i> Filters
+            </button>
+        </div>
     </div>
 
-    <button type="submit">Filter</button>
-</form>
-
-<hr>
-
-{% for p in page_obj %}
-    <div>
-        <h2>{{ p.title }}</h2>
-        <a href="{% url 'product-detail' p.pk %}">More</a>
+    <div id="products-container" class="position-relative">
+        {% include 'product/product_grid.html' %}
     </div>
-{% empty %}
-    <p>No products in given query.</p>
-{% endfor %}
 
+    <div id="pagination-container">
+        {% include 'pagination/pagination.html' %}
+    </div>
+</div>
 
-<div class="pagination">
-    {% if page_obj.has_previous %}
-        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
+<div class="offcanvas offcanvas-end" tabindex="-1" id="filterDrawer" aria-labelledby="filterDrawerLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold" id="filterDrawerLabel"><i class="bi bi-sliders me-2"></i>Filters</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="filter-form">
+            <div class="mb-4">
+                <label for="category-select" class="form-label fw-bold">Category:</label>
+                <select id="category-select" name="category" class="form-select">
+                    <option value="">-- All categories --</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                            {{ cat.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-            <strong>{{ num }}</strong>
-        {% else %}
-            <a href="?{{ request.GET.urlencode }}&page={{ num }}">{{ num }}</a>
-        {% endif %}
-    {% endfor %}
+            <div id="filters-block" class="d-flex flex-column gap-3 mb-4"></div>
 
-    {% if page_obj.has_next %}
-        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Next</a>
-    {% endif %}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success py-2 fw-semibold">Apply</button>
+                <button type="button" id="reset-filters" class="btn btn-outline-secondary py-2">Reset All</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}
